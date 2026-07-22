@@ -1,4 +1,4 @@
-package ticket.dto;
+package com.alten.backend.ticket.dto;
 
 public class TicketDTO {
 

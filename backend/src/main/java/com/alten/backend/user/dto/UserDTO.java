@@ -1,4 +1,4 @@
-package user.dto;
+package com.alten.backend.user.dto;
 
 public class UserDTO {
 

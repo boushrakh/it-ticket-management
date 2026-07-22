@@ -1,4 +1,4 @@
-package ticket.repository;
+package com.alten.backend.ticket.repository;
 
 public class TicketRepository {
 

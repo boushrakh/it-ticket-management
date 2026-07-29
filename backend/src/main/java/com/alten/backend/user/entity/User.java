@@ -34,7 +34,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets = new ArrayList<>();
 
-    /** Required by JPA. */
     protected User() {
     }
 

@@ -73,7 +73,7 @@ const AppSidebar = () => {
             className="sidebar-brand-full"
             src={logoPng}
             alt="IT Ticket Management"
-            height={32}
+            height={100}
           />
           <img
             className="sidebar-brand-narrow"

@@ -24,21 +24,26 @@ public class Ticket {
     @Column(nullable = false, length = 50)
     private String status;
 
+    @Column(length = 50)
+    private String category;
+
     @Column(nullable = false, updatable = false)
     private java.time.LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     protected Ticket() {
     }
 
-    public Ticket(String title, String description, String priority, String status) {
+    public Ticket(String title, String description, String priority, String status, String category, User user) {
         this.title = title;
         this.description = description;
         this.priority = priority;
         this.status = status;
+        this.category = category;
+        this.user = user;
     }
 
     @PrePersist
@@ -46,6 +51,14 @@ public class Ticket {
         if (createdAt == null) {
             createdAt = java.time.LocalDateTime.now();
         }
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public Long getId() {

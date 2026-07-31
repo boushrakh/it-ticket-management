@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   CAvatar,
   CBadge,
@@ -13,8 +14,17 @@ import { cilBell, cilLockLocked, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
 import avatar8 from './../../assets/images/avatars/8.jpg'
+import { clearAuthSession, getStoredAuthUser } from '../../services/api'
 
 const AppHeaderDropdown = () => {
+  const navigate = useNavigate()
+  const user = getStoredAuthUser()
+
+  const handleLogout = () => {
+    clearAuthSession()
+    navigate('/login')
+  }
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
@@ -22,7 +32,7 @@ const AppHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">
-          IT Ticket Management
+          {user?.username || 'IT Ticket Management'}
         </CDropdownHeader>
         <CDropdownItem href="#">
           <CIcon icon={cilBell} className="me-2" />
@@ -36,7 +46,7 @@ const AppHeaderDropdown = () => {
           Profil utilisateur
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownItem href="#" onClick={handleLogout}>
           <CIcon icon={cilLockLocked} className="me-2" />
           Déconnexion
         </CDropdownItem>

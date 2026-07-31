@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   CBadge,
@@ -7,6 +7,11 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
+  CCol,
+  CFormInput,
+  CFormSelect,
+  CRow,
+  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -15,35 +20,7 @@ import {
   CTableRow,
 } from '@coreui/react'
 
-const initialTickets = [
-  {
-    id: 1001,
-    title: 'Erreur d’accès au portail RH',
-    requester: 'Sofia Benali',
-    status: 'Ouvert',
-    priority: 'Haute',
-    assignee: 'Youssef Idrissi',
-    createdAt: '2026-07-28',
-  },
-  {
-    id: 1002,
-    title: 'Imprimante réseau hors ligne',
-    requester: 'Karim Rami',
-    status: 'En cours',
-    priority: 'Moyenne',
-    assignee: 'Nadia El Yacoubi',
-    createdAt: '2026-07-29',
-  },
-  {
-    id: 1003,
-    title: 'Demande de réinitialisation VPN',
-    requester: 'Lina Chraibi',
-    status: 'Résolu',
-    priority: 'Basse',
-    assignee: 'Hassan Mounir',
-    createdAt: '2026-07-30',
-  },
-]
+import { deleteTicket, listTickets } from '../../services/api'
 
 const statusVariant = {
   Ouvert: 'primary',
@@ -61,12 +38,50 @@ const priorityVariant = {
 
 const Tickets = () => {
   const navigate = useNavigate()
-  const [tickets, setTickets] = useState(initialTickets)
+  const [tickets, setTickets] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState('all')
+  const [priorityFilter, setPriorityFilter] = useState('all')
 
-  const ticketCount = useMemo(() => tickets.length, [tickets])
+  useEffect(() => {
+    const loadTickets = async () => {
+      try {
+        const data = await listTickets()
+        setTickets(data)
+      } catch {
+        setTickets([])
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  const handleDelete = (ticketId) => {
-    setTickets((current) => current.filter((ticket) => ticket.id !== ticketId))
+    loadTickets()
+  }, [])
+
+  const filteredTickets = useMemo(() => {
+    return tickets.filter((ticket) => {
+      const matchesSearch = [ticket.title, ticket.requester, ticket.assignee, ticket.description]
+        .join(' ')
+        .toLowerCase()
+        .includes(search.toLowerCase())
+      const matchesStatus = statusFilter === 'all' || ticket.status === statusFilter
+      const matchesPriority = priorityFilter === 'all' || ticket.priority === priorityFilter
+      return matchesSearch && matchesStatus && matchesPriority
+    })
+  }, [tickets, search, statusFilter, priorityFilter])
+
+  const handleDelete = async (ticketId) => {
+    if (!window.confirm('Supprimer ce ticket ?')) {
+      return
+    }
+
+    try {
+      await deleteTicket(ticketId)
+      setTickets((current) => current.filter((ticket) => ticket.id !== ticketId))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const handleEdit = (ticket) => {
@@ -77,65 +92,102 @@ const Tickets = () => {
     navigate(`/tickets/${ticketId}`)
   }
 
+  const formatDate = (value) => {
+    if (!value) return '—'
+    const date = new Date(value)
+    return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('fr-FR')
+  }
+
   return (
-    <CCard className="mb-4">
+    <CCard className="mb-4 shadow-sm border-0">
       <CCardHeader className="d-flex justify-content-between align-items-center">
-        <span>Tickets</span>
+        <div>
+          <h2 className="h5 mb-0">Gestion des tickets</h2>
+          <div className="text-body-secondary small">Recherche, filtres et actions rapides</div>
+        </div>
         <CButton color="primary" onClick={() => navigate('/tickets/create')}>
           Créer un ticket
         </CButton>
       </CCardHeader>
       <CCardBody>
+        <CRow className="g-3 mb-4">
+          <CCol md={5}>
+            <CFormInput placeholder="Rechercher un ticket" value={search} onChange={(event) => setSearch(event.target.value)} />
+          </CCol>
+          <CCol md={3}>
+            <CFormSelect value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+              <option value="all">Tous les statuts</option>
+              <option value="Ouvert">Ouvert</option>
+              <option value="En cours">En cours</option>
+              <option value="Résolu">Résolu</option>
+              <option value="Fermé">Fermé</option>
+            </CFormSelect>
+          </CCol>
+          <CCol md={3}>
+            <CFormSelect value={priorityFilter} onChange={(event) => setPriorityFilter(event.target.value)}>
+              <option value="all">Toutes les priorités</option>
+              <option value="Basse">Basse</option>
+              <option value="Moyenne">Moyenne</option>
+              <option value="Haute">Haute</option>
+              <option value="Critique">Critique</option>
+            </CFormSelect>
+          </CCol>
+        </CRow>
+
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <strong>{ticketCount} ticket(s) affiché(s)</strong>
+          <strong>{filteredTickets.length} ticket(s) affiché(s)</strong>
         </div>
 
-        <CTable align="middle" hover responsive>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell>#</CTableHeaderCell>
-              <CTableHeaderCell>Sujet</CTableHeaderCell>
-              <CTableHeaderCell>Demandeur</CTableHeaderCell>
-              <CTableHeaderCell>Statut</CTableHeaderCell>
-              <CTableHeaderCell>Priorité</CTableHeaderCell>
-              <CTableHeaderCell>Assigné à</CTableHeaderCell>
-              <CTableHeaderCell>Créé le</CTableHeaderCell>
-              <CTableHeaderCell>Actions</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            {tickets.map((ticket) => (
-              <CTableRow key={ticket.id}>
-                <CTableDataCell>{ticket.id}</CTableDataCell>
-                <CTableDataCell>{ticket.title}</CTableDataCell>
-                <CTableDataCell>{ticket.requester}</CTableDataCell>
-                <CTableDataCell>
-                  <CBadge color={statusVariant[ticket.status] || 'secondary'}>{ticket.status}</CBadge>
-                </CTableDataCell>
-                <CTableDataCell>
-                  <CBadge color={priorityVariant[ticket.priority] || 'secondary'}>
-                    {ticket.priority}
-                  </CBadge>
-                </CTableDataCell>
-                <CTableDataCell>{ticket.assignee}</CTableDataCell>
-                <CTableDataCell>{ticket.createdAt}</CTableDataCell>
-                <CTableDataCell>
-                  <CButtonGroup size="sm">
-                    <CButton color="info" variant="outline" onClick={() => handleDetails(ticket.id)}>
-                      Détails
-                    </CButton>
-                    <CButton color="warning" variant="outline" onClick={() => handleEdit(ticket)}>
-                      Modifier
-                    </CButton>
-                    <CButton color="danger" variant="outline" onClick={() => handleDelete(ticket.id)}>
-                      Supprimer
-                    </CButton>
-                  </CButtonGroup>
-                </CTableDataCell>
+        {loading ? (
+          <div className="text-center py-5">
+            <CSpinner color="primary" />
+          </div>
+        ) : (
+          <CTable align="middle" hover responsive>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell>#</CTableHeaderCell>
+                <CTableHeaderCell>Sujet</CTableHeaderCell>
+                <CTableHeaderCell>Demandeur</CTableHeaderCell>
+                <CTableHeaderCell>Statut</CTableHeaderCell>
+                <CTableHeaderCell>Priorité</CTableHeaderCell>
+                <CTableHeaderCell>Assigné à</CTableHeaderCell>
+                <CTableHeaderCell>Créé le</CTableHeaderCell>
+                <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
-            ))}
-          </CTableBody>
-        </CTable>
+            </CTableHead>
+            <CTableBody>
+              {filteredTickets.map((ticket) => (
+                <CTableRow key={ticket.id}>
+                  <CTableDataCell>{ticket.id}</CTableDataCell>
+                  <CTableDataCell>{ticket.title}</CTableDataCell>
+                  <CTableDataCell>{ticket.requester}</CTableDataCell>
+                  <CTableDataCell>
+                    <CBadge color={statusVariant[ticket.status] || 'secondary'}>{ticket.status}</CBadge>
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CBadge color={priorityVariant[ticket.priority] || 'secondary'}>{ticket.priority}</CBadge>
+                  </CTableDataCell>
+                  <CTableDataCell>{ticket.assignee || '—'}</CTableDataCell>
+                  <CTableDataCell>{formatDate(ticket.createdAt)}</CTableDataCell>
+                  <CTableDataCell>
+                    <CButtonGroup size="sm">
+                      <CButton color="info" variant="outline" onClick={() => handleDetails(ticket.id)}>
+                        Détails
+                      </CButton>
+                      <CButton color="warning" variant="outline" onClick={() => handleEdit(ticket)}>
+                        Modifier
+                      </CButton>
+                      <CButton color="danger" variant="outline" onClick={() => handleDelete(ticket.id)}>
+                        Supprimer
+                      </CButton>
+                    </CButtonGroup>
+                  </CTableDataCell>
+                </CTableRow>
+              ))}
+            </CTableBody>
+          </CTable>
+        )}
       </CCardBody>
     </CCard>
   )

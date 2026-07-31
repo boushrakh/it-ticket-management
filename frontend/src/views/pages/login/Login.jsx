@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
+  CAlert,
   CButton,
   CCard,
   CCardBody,
-  CCardGroup,
   CCol,
   CContainer,
   CForm,
@@ -16,117 +16,110 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 
+import { loginUser, setAuthSession } from '../../../services/api'
+
 const Login = () => {
   const navigate = useNavigate()
-
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [form, setForm] = useState({ username: 'admin', password: 'admin123' })
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleLogin = async (e) => {
-    e.preventDefault()
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setForm((current) => ({ ...current, [name]: value }))
+  }
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
     setLoading(true)
+    setError('')
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      })
-
-      // CORRECTION 1 : response.ok (SANS le "!")
-      if (response.ok) {
-        const data = await response.json()
-        localStorage.setItem('user', JSON.stringify(data))
-        navigate('/dashboard')
-      } else {
-        alert("Nom d'utilisateur ou mot de passe incorrect")
-      }
-    } catch (error) {
-      console.error('Erreur lors de la connexion:', error)
-      alert('Impossible de se connecter au serveur. Veuillez réessayer plus tard.')
+      const data = await loginUser({ username: form.username, password: form.password })
+      setAuthSession(data)
+      navigate('/dashboard')
+    } catch (err) {
+      setError(err.message || 'Connexion impossible')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+    <div className="bg-body-tertiary min-vh-100 d-flex align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md={8}>
-            <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
-                  {/* CORRECTION 2 : Ajout de onSubmit={handleLogin} */}
-                  <CForm onSubmit={handleLogin}>
-                    <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
-                    
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      {/* CORRECTION 3 : Ajout de value et onChange */}
-                      <CFormInput
-                        placeholder="Username"
-                        autoComplete="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                      />
-                    </CInputGroup>
+          <CCol md={8} lg={7} xl={6}>
+            <CCard className="shadow border-0 overflow-hidden">
+              <div className="row g-0">
+                <div className="col-lg-7 p-4 p-lg-5">
+                  <CCardBody>
+                    <div className="mb-4">
+                      <div className="text-primary fw-semibold text-uppercase small">IT Ticket Management</div>
+                      <h1 className="h3 mt-2 mb-2">Connexion au tableau de bord</h1>
+                      <p className="text-body-secondary mb-0">
+                        Accédez à la plateforme de suivi de tickets et à l’assistance IA.
+                      </p>
+                    </div>
 
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      {/* CORRECTION 3 : Ajout de value et onChange */}
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                      />
-                    </CInputGroup>
+                    {error && <CAlert color="danger">{error}</CAlert>}
 
-                    <CRow>
-                      <CCol xs={6}>
-                        {/* CORRECTION 4 : type="submit" pour valider le formulaire */}
-                        <CButton type="submit" color="primary" className="px-4" disabled={loading}>
-                          {loading ? 'Connexion...' : 'Login'}
+                    <CForm onSubmit={handleLogin}>
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText>
+                          <CIcon icon={cilUser} />
+                        </CInputGroupText>
+                        <CFormInput
+                          name="username"
+                          placeholder="Nom d’utilisateur"
+                          autoComplete="username"
+                          value={form.username}
+                          onChange={handleChange}
+                          required
+                        />
+                      </CInputGroup>
+
+                      <CInputGroup className="mb-4">
+                        <CInputGroupText>
+                          <CIcon icon={cilLockLocked} />
+                        </CInputGroupText>
+                        <CFormInput
+                          name="password"
+                          type="password"
+                          placeholder="Mot de passe"
+                          autoComplete="current-password"
+                          value={form.password}
+                          onChange={handleChange}
+                          required
+                        />
+                      </CInputGroup>
+
+                      <div className="d-grid gap-2">
+                        <CButton type="submit" color="primary" disabled={loading}>
+                          {loading ? 'Connexion...' : 'Se connecter'}
                         </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
+                        <Link to="/register" className="text-decoration-none">
+                          <CButton color="secondary" variant="outline" className="w-100">
+                            Créer un compte
+                          </CButton>
+                        </Link>
+                      </div>
+                    </CForm>
+                  </CCardBody>
+                </div>
+                <div className="col-lg-5 bg-primary text-white p-4 p-lg-5 d-flex flex-column justify-content-center">
+                  <h2 className="h4">Plateforme IT moderne</h2>
+                  <p className="mb-4">
+                    Gérez vos incidents, priorités et analyse IA depuis une seule interface professionnelle.
+                  </p>
+                  <ul className="list-unstyled small mb-0">
+                    <li>• Tableau de bord temps réel</li>
+                    <li>• Tickets triés par priorité</li>
+                    <li>• Suggestions d’IA intégrées</li>
+                  </ul>
+                </div>
+              </div>
+            </CCard>
           </CCol>
         </CRow>
       </CContainer>

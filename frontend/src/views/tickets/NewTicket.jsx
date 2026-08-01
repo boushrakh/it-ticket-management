@@ -34,6 +34,14 @@ const NewTicket = () => {
   const [loading, setLoading] = useState(false)
   const [aiHint, setAiHint] = useState('')
 
+  const formControlStyle = {
+    backgroundColor: 'var(--cui-body-bg, #fff)',
+    color: 'var(--cui-body-color, #212529)',
+    border: '1px solid var(--cui-border-color, #ced4da)',
+    boxShadow: 'none',
+    WebkitTextFillColor: 'var(--cui-body-color, #212529)',
+  }
+
   useEffect(() => {
     if (ticket) {
       setFormData((current) => ({ ...current, ...ticket }))
@@ -78,7 +86,40 @@ const NewTicket = () => {
   }
 
   return (
-    <CCard className="mb-4 shadow-sm border-0">
+    <>
+      <style>{`
+        .ticket-form-control {
+          background-color: var(--cui-body-bg, #fff) !important;
+          color: var(--cui-body-color, #212529) !important;
+          border: 1px solid var(--cui-border-color, #ced4da) !important;
+          box-shadow: none !important;
+        }
+
+        .ticket-form-control::placeholder {
+          color: var(--cui-secondary-color, #6c757d) !important;
+          opacity: 1;
+        }
+
+        .ticket-form-control:focus {
+          background-color: var(--cui-body-bg, #fff) !important;
+          color: var(--cui-body-color, #212529) !important;
+          border-color: var(--cui-primary, #0d6efd) !important;
+          box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+        }
+
+        [data-coreui-theme="dark"] .ticket-form-control {
+          background-color: #1f2937 !important;
+          color: #f8f9fa !important;
+          border-color: #4b5563 !important;
+        }
+
+        [data-coreui-theme="dark"] .ticket-form-control:focus {
+          border-color: #60a5fa !important;
+          box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25) !important;
+        }
+      `}</style>
+
+      <CCard className="mb-4 shadow-sm border-0">
       <CCardHeader>
         <h2 className="h5 mb-0">{ticket ? 'Modifier le ticket' : 'Nouveau ticket'}</h2>
       </CCardHeader>
@@ -89,15 +130,15 @@ const NewTicket = () => {
         <CForm onSubmit={handleSubmit}>
           <CRow className="g-3">
             <CCol md={6}>
-              <CFormInput name="title" label="Sujet" value={formData.title} onChange={handleChange} required />
+              <CFormInput name="title" label="Sujet" value={formData.title} onChange={handleChange} required className="ticket-form-control" style={formControlStyle} />
             </CCol>
 
             <CCol md={6}>
-              <CFormInput name="requester" label="Demandeur" value={formData.requester} onChange={handleChange} required />
+              <CFormInput name="requester" label="Demandeur" value={formData.requester} onChange={handleChange} required className="ticket-form-control" style={formControlStyle} />
             </CCol>
 
             <CCol md={4}>
-              <CFormSelect name="priority" label="Priorité" value={formData.priority} onChange={handleChange}>
+              <CFormSelect name="priority" label="Priorité" value={formData.priority} onChange={handleChange} className="ticket-form-control" style={formControlStyle}>
                 <option value="Basse">Basse</option>
                 <option value="Moyenne">Moyenne</option>
                 <option value="Haute">Haute</option>
@@ -106,7 +147,7 @@ const NewTicket = () => {
             </CCol>
 
             <CCol md={4}>
-              <CFormSelect name="status" label="Statut" value={formData.status} onChange={handleChange}>
+              <CFormSelect name="status" label="Statut" value={formData.status} onChange={handleChange} className="ticket-form-control" style={formControlStyle}>
                 <option value="Ouvert">Ouvert</option>
                 <option value="En cours">En cours</option>
                 <option value="Résolu">Résolu</option>
@@ -115,11 +156,11 @@ const NewTicket = () => {
             </CCol>
 
             <CCol md={4}>
-              <CFormInput name="assignee" label="Assigné à" value={formData.assignee} onChange={handleChange} />
+              <CFormInput name="assignee" label="Assigné à" value={formData.assignee} onChange={handleChange} className="ticket-form-control" style={formControlStyle} />
             </CCol>
 
             <CCol xs={12}>
-              <CFormTextarea name="description" label="Description" rows={5} value={formData.description} onChange={handleChange} />
+              <CFormTextarea name="description" label="Description" rows={5} value={formData.description} onChange={handleChange} className="ticket-form-control" style={formControlStyle} />
             </CCol>
           </CRow>
 
@@ -136,7 +177,8 @@ const NewTicket = () => {
           </div>
         </CForm>
       </CCardBody>
-    </CCard>
+      </CCard>
+    </>
   )
 }
 

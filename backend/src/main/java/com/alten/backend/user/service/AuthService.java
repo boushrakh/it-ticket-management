@@ -1,6 +1,6 @@
 package com.alten.backend.user.service;
 
-import com.alten.backend.config.JwtService;
+import com.alten.backend.auth.service.JwtService;
 import com.alten.backend.user.dto.AuthRequest;
 import com.alten.backend.user.dto.AuthResponse;
 import com.alten.backend.user.dto.RegisterRequest;

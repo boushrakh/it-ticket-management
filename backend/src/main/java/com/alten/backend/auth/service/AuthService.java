@@ -6,9 +6,7 @@ import com.alten.backend.auth.dto.RegisterRequest;
 import com.alten.backend.user.entity.User;
 import com.alten.backend.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-@Service
 public class AuthService {
 
     private final UserRepository userRepository;

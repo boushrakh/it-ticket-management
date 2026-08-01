@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for a new feature in CoreUI Free React Admin Template.
+about: Suggest an idea for a new feature in IT Ticket Management.
 title: ''
 labels: feature
 assignees: ''

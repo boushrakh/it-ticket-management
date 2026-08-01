@@ -1,5 +1,6 @@
 package com.alten.backend.ai.service;
 
+<<<<<<< HEAD
 import com.alten.backend.ai.controller.AIController;
 import com.alten.backend.ai.dto.AIdto;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,24 @@ public class AIService {
     public AIdto analyzeTicket(String ticketDescription) {
         if (ticketDescription == null || ticketDescription.isEmpty()) {
             return new AIdto("General", "Basse", "Aucune description fournie.");
+=======
+import com.alten.backend.ai.dto.AIdto;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AIService {
+
+    public AIdto analyzeTicket(String ticketDescription) {
+        if (ticketDescription == null || ticketDescription.isBlank()) {
+            return new AIdto("Général", "Basse", "Aucune description fournie.");
+>>>>>>> feature/frontend-coreui
         }
 
         String lowerDesc = ticketDescription.toLowerCase();
         String category = "Autre";
         String priority = "Moyenne";
 
+<<<<<<< HEAD
         if (lowerDesc.contains("écran") || lowerDesc.contains("ecran") || lowerDesc.contains("souris") || lowerDesc.contains("clavier") || lowerDesc.contains("imprimante") || lowerDesc.contains("ordinateur") || lowerDesc.contains("pc") || lowerDesc.contains("clavier")) {
             category = "Matériel";
         } else if (lowerDesc.contains("wifi") || lowerDesc.contains("réseau") || lowerDesc.contains("reseau") || lowerDesc.contains("connexion") || lowerDesc.contains("internet")) {
@@ -35,6 +48,18 @@ public class AIService {
 
         if (lowerDesc.contains("urgent") || lowerDesc.contains("bloqué") || lowerDesc.contains("bloque") || lowerDesc.contains("panne générale") || lowerDesc.contains("critique")) {
 
+=======
+        if (lowerDesc.contains("écran") || lowerDesc.contains("ecran") || lowerDesc.contains("souris") || lowerDesc.contains("clavier")
+                || lowerDesc.contains("imprimante") || lowerDesc.contains("ordinateur") || lowerDesc.contains("pc")) {
+            category = "Matériel";
+        } else if (lowerDesc.contains("wifi") || lowerDesc.contains("réseau") || lowerDesc.contains("reseau") || lowerDesc.contains("connexion") || lowerDesc.contains("internet")) {
+            category = "Réseau";
+        } else if (lowerDesc.contains("bug") || lowerDesc.contains("erreur") || lowerDesc.contains("logiciel") || lowerDesc.contains("application") || lowerDesc.contains("mot de passe")) {
+            category = "Logiciel";
+        }
+
+        if (lowerDesc.contains("urgent") || lowerDesc.contains("bloqué") || lowerDesc.contains("bloque") || lowerDesc.contains("panne générale") || lowerDesc.contains("critique")) {
+>>>>>>> feature/frontend-coreui
             priority = "Haute";
         } else if (lowerDesc.contains("lent") || lowerDesc.contains("problème") || lowerDesc.contains("probleme") || lowerDesc.contains("bug")) {
             priority = "Moyenne";
@@ -42,9 +67,15 @@ public class AIService {
             priority = "Basse";
         }
 
+<<<<<<< HEAD
         String summary = ticketDescription.length() > 60 ? ticketDescription.substring(0, 57) + "..." : ticketDescription;
 
         return new AIdto(category, priority, summary);
     }
 
+=======
+        String summary = ticketDescription.length() > 80 ? ticketDescription.substring(0, 77) + "..." : ticketDescription;
+        return new AIdto(category, priority, summary);
+    }
+>>>>>>> feature/frontend-coreui
 }

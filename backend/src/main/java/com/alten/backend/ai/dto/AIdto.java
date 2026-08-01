@@ -17,21 +17,30 @@ public class AIdto {
     public String getCategory() {
         return category;
     }
+<<<<<<< HEAD
     public void setCategory(String category) {
         this.category = category;
     }
+=======
+>>>>>>> feature/frontend-coreui
 
     public String getPriority() {
         return priority;
     }
+<<<<<<< HEAD
     public void setPriority(String priority) {
         this.priority = priority;
     }
+=======
+>>>>>>> feature/frontend-coreui
 
     public String getSummary() {
         return summary;
     }
+<<<<<<< HEAD
     public void setSummary(String summary) {
         this.summary = summary;
     }
+=======
+>>>>>>> feature/frontend-coreui
 }

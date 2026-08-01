@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
  
-@RestController
-@RequestMapping("/auth")
-@CrossOrigin(origins = "*")
+// Legacy controller kept for reference; the active authentication endpoints are exposed by
+// com.alten.backend.user.controller.AuthController under /api/auth.
 public class AuthController {
  
     private final AuthService authService;

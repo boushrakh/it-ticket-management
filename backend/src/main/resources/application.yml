@@ -1,0 +1,10 @@
+spring:
+    application:
+        name: backend
+
+jwt:
+    secret: altenTicketManagementSecretKey2026ProjectSecurity123456
+    expiration: 86400000
+
+server:
+  port: ${PORT:8081}

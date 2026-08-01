@@ -85,7 +85,10 @@ const AppHeader = () => {
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
-        <CHeaderNav className="d-none d-md-flex">
+        <CHeaderNav className="d-none d-md-flex align-items-center">
+          <CNavItem>
+            <span className="navbar-text fw-semibold me-4">IT Ticket Management</span>
+          </CNavItem>
           <CNavItem>
             <CNavLink to="/dashboard" as={NavLink}>
               Dashboard

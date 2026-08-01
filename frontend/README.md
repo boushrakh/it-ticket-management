@@ -1,4 +1,4 @@
-# CoreUI Free React Admin Template - Built for AI-Assisted Development [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?text=CoreUI%20-%20Free%React%204%20Admin%20Template%20&url=https://coreui.io&hashtags=bootstrap,admin,template,dashboard,panel,free,angular,react,vue)
+# IT Ticket Management - Built for AI-Assisted Development [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?text=IT%20Ticket%20Management%20-%20Admin%20Template%20&url=https://coreui.io&hashtags=bootstrap,admin,template,dashboard,panel,free,angular,react,vue)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![@coreui coreui](https://img.shields.io/badge/@coreui%20-coreui-lightgrey.svg?style=flat-square)](https://github.com/coreui/coreui)
@@ -18,7 +18,7 @@
 
 [![Bootstrap Admin Template](https://assets.coreui.io/products/coreui-free-bootstrap-admin-template-light-dark.webp)](https://coreui.io/product/free-react-admin-template/)
 
-CoreUI is meant to be the UX game changer. Pure & transparent code is devoid of redundant components, so the app is light enough to offer ultimate user experience. This means mobile devices also, where the navigation is just as easy and intuitive as on a desktop or laptop. The CoreUI Layout API lets you customize your project for almost any device – be it Mobile, Web or WebApp – CoreUI covers them all!
+IT Ticket Management is meant to be the UX game changer. Pure & transparent code is devoid of redundant components, so the app is light enough to offer ultimate user experience. This means mobile devices also, where the navigation is just as easy and intuitive as on a desktop or laptop. The layout API lets you customize your project for almost any device – be it Mobile, Web or WebApp.
 
 ## Table of Contents
 
@@ -40,11 +40,11 @@ CoreUI is meant to be the UX game changer. Pure & transparent code is devoid of 
 
 ## Versions
 
-* [CoreUI Free Bootstrap Admin Template](https://github.com/coreui/coreui-free-bootstrap-admin-template)
-* [CoreUI Free Angular Admin Template](https://github.com/coreui/coreui-free-angular-admin-template)
-* [CoreUI Free React.js Admin Template (Vite)](https://github.com/coreui/coreui-free-react-admin-template)
-* [CoreUI Free React.js Admin Template (Create React App)](https://github.com/coreui/coreui-free-react-admin-template-cra)
-* [CoreUI Free Vue.js Admin Template](https://github.com/coreui/coreui-free-vue-admin-template)
+* [IT Ticket Management - Bootstrap Admin Template](https://github.com/coreui/coreui-free-bootstrap-admin-template)
+* [IT Ticket Management - Angular Admin Template](https://github.com/coreui/coreui-free-angular-admin-template)
+* [IT Ticket Management - React Admin Template (Vite)](https://github.com/coreui/coreui-free-react-admin-template)
+* [IT Ticket Management - React Admin Template (Create React App)](https://github.com/coreui/coreui-free-react-admin-template-cra)
+* [IT Ticket Management - Vue Admin Template](https://github.com/coreui/coreui-free-vue-admin-template)
 
 ## CoreUI PRO
 

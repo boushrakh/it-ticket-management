@@ -1,6 +1,6 @@
-# CoreUI Free React Admin Template - Architecture
+# IT Ticket Management - Architecture
 
-This document provides a comprehensive overview of the CoreUI Free React Admin Template architecture, design patterns, and technical implementation details.
+This document provides a comprehensive overview of the IT Ticket Management architecture, design patterns, and technical implementation details.
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@ This document provides a comprehensive overview of the CoreUI Free React Admin T
 
 ## Project Overview
 
-The CoreUI Free React Admin Template is a professional admin dashboard built on React 19, CoreUI React components, and Bootstrap 5. It follows modern React patterns with functional components, Hooks, and a component-based architecture.
+The IT Ticket Management project is a professional admin dashboard built on React 19, CoreUI React components, and Bootstrap 5. It follows modern React patterns with functional components, Hooks, and a component-based architecture.
 
 **Key Features**:
 - Single Page Application (SPA) with client-side routing
@@ -140,7 +140,7 @@ Component-level state uses React Hooks (useState, useReducer).
 ## Directory Structure
 
 ```
-coreui-free-react-admin-template/
+it-ticket-management/
 │
 ├── public/                      # Static assets (served as-is)
 │   ├── favicon.ico

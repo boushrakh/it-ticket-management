@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+<<<<<<< HEAD
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["./src/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["./src"]
+=======
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "@/*": ["src/*"]
+    },
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "build"]
+>>>>>>> feature/frontend-coreui
+}

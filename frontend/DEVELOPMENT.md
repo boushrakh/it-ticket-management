@@ -1,6 +1,6 @@
-# CoreUI Free React Admin Template - Development Guide
+# IT Ticket Management - Development Guide
 
-A comprehensive guide for developers working with the CoreUI Free React Admin Template. This guide covers setup, development workflows, common patterns, and best practices.
+A comprehensive guide for developers working with IT Ticket Management. This guide covers setup, development workflows, common patterns, and best practices.
 
 ## Table of Contents
 
@@ -55,7 +55,7 @@ A comprehensive guide for developers working with the CoreUI Free React Admin Te
 1. **Clone the repository** (or download the source):
 ```bash
 git clone https://github.com/coreui/coreui-free-react-admin-template.git
-cd coreui-free-react-admin-template
+cd it-ticket-management
 ```
 
 2. **Install dependencies**:

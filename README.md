@@ -4,79 +4,17 @@
 Plateforme de gestion des incidents et tickets IT intégrant une intelligence artificielle permettant d'analyser automatiquement les tickets, de proposer une catégorie, un niveau de priorité et de générer un résumé.
 
 ## Membres de l'équipe
-- Nafha KARMAS
-- Bouchra KHARKHOUCHE
+-Nafha KARMAS
+-Bouchra KHARKHOUCHE
 
 ## Technologies
 -Back-end : Spring Boot
 -Front-end : React
 -Base de données : PostgreSQL
 -Sécurité : Spring Security + JWT
--Intelligence Artificielle : Microservice Python (FastAPI) utilisant un LLM (OpenAI GPT / Gemini)
+-Intelligence Artificielle : Python, FastAPI, LLM (OpenAI GPT / Gemini)
 -Conteneurisation : Docker
 -Gestion de versions : Git / GitHub
-
-## Architecture
-```text
-    Frontend(React)
-           |
-    Backend(Spring Boot)
-           |
-    PostgreSQL
-
-    Backend <-> Service IA (FastAPI)
-```
-
-## Structure du projet
-
-```text
-IT-Ticket-Management
-|
-|-frontend/
-|-backend/
-|-app/
-|-tests/
-|-docker-compose.yml
-|-README.md
-|-.gitignore
-|-.env.example
-```
-
-## Prérequis
-- Java 26
-- Maven
-- Node.js
-- Docker(en attente d'installation)
-- PostgreSQL(via Docker)
-- Git
-
-> **Remarque :** La configuration de Docker et de PostgreSQL sera finalisé après la validation et installation des outils par l'administration.
-
-## Installation et lancement
-
-### Backend
-
-```bash
-cd backend
-mvn clean install
-mvn spring-boot:run
-```
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## Exécution des tests
-
-### Tests Backend
-
-```bash
-cd backend
-mvn test
-```
 
 ## Conventions Git
 
@@ -110,3 +48,18 @@ Description :
 - Fonctionnalités ajoutées
 - Fichiers modifiés
 - Tests effectués
+
+## Lancer le Backend
+cd backend
+mvn spring-boot:run
+
+
+## Exécuter les tests
+cd backend
+mvn test
+
+
+## Lancer le Frontend
+cd frontend
+npm install
+npm run dev

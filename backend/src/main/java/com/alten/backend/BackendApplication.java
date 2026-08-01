@@ -1,4 +1,4 @@
-﻿package com.alten.backend;
+package com.alten.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

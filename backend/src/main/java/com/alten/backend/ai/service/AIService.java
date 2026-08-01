@@ -1,4 +1,4 @@
-﻿package com.alten.backend.ai.service;
+package com.alten.backend.ai.service;
 
 import com.alten.backend.ai.dto.AIdto;
 import org.springframework.stereotype.Service;

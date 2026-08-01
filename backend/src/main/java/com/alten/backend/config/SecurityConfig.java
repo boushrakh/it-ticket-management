@@ -1,4 +1,4 @@
-﻿package com.alten.backend.config;
+package com.alten.backend.config;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;

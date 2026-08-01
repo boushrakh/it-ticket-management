@@ -1,4 +1,4 @@
-﻿package com.alten.backend.ticket.entity;
+package com.alten.backend.ticket.entity;
 
 import com.alten.backend.user.entity.User;
 import jakarta.persistence.*;

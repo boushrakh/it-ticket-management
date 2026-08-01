@@ -1,4 +1,4 @@
-﻿package com.alten.backend.ticket.controller;
+package com.alten.backend.ticket.controller;
 
 import com.alten.backend.ticket.dto.TicketRequest;
 import com.alten.backend.ticket.dto.TicketResponse;
